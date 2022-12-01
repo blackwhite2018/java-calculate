@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 class Converter {
     private final HashMap<String, String> ROMAN_SYMBOLS = new HashMap();
@@ -59,20 +60,11 @@ class Converter {
 public class Main {
 
     public static void main(String[] args) {
-        String str1 = "1 + 2";
-        String str2 = "VI / III";
-        String str3 = "I - II";
-        String str4 = "I + 1";
-        String str5 = "1";
-        String str6 = "1 + 2 + 3";
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
 
         try {
-            System.out.println(str1 + " = " + calc(str1));
-            System.out.println(str2 + " = " + calc(str2));
-            // System.out.println(str3 + " = " + calc(str3));
-            // System.out.println(str4 + " = " + calc(str4));
-            // System.out.println(str5 + " = " + calc(str5));
-            // System.out.println(str6 + " = " + calc(str6));
+            System.out.println(str + " = " + calc(str));
         } catch (Exception e) {
             System.out.println(e);
         }
