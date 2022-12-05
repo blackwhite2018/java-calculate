@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 class Converter {
     private final HashMap<String, String> ROMAN_SYMBOLS = new HashMap();
-    private final HashMap<String, String> ARABIC_SYMBOLS = new HashMap();
+    private int[] numbers = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+    private String[] letters = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
 
     Converter() {
         ROMAN_SYMBOLS.put("I", "1");
@@ -17,39 +18,28 @@ class Converter {
         ROMAN_SYMBOLS.put("VII", "7");
         ROMAN_SYMBOLS.put("VIII", "8");
         ROMAN_SYMBOLS.put("IX", "9");
-
-        ARABIC_SYMBOLS.put("1", "I");
-        ARABIC_SYMBOLS.put("2", "II");
-        ARABIC_SYMBOLS.put("3", "III");
-        ARABIC_SYMBOLS.put("4", "IV");
-        ARABIC_SYMBOLS.put("5", "V");
-        ARABIC_SYMBOLS.put("6", "VI");
-        ARABIC_SYMBOLS.put("7", "VII");
-        ARABIC_SYMBOLS.put("8", "VIII");
-        ARABIC_SYMBOLS.put("9", "IX");
-        ARABIC_SYMBOLS.put("10", "X");
-
-        ARABIC_SYMBOLS.put("11", "XI");
-        ARABIC_SYMBOLS.put("12", "XII");
-        ARABIC_SYMBOLS.put("13", "XIII");
-        ARABIC_SYMBOLS.put("14", "XIV");
-        ARABIC_SYMBOLS.put("15", "XV");
-        ARABIC_SYMBOLS.put("16", "XVI");
-        ARABIC_SYMBOLS.put("17", "XVII");
-        ARABIC_SYMBOLS.put("18", "XVIII");
-        ARABIC_SYMBOLS.put("19", "XIX");
-        ARABIC_SYMBOLS.put("20", "XX");
     }
 
     public String toArabic(String roman) {
         if (ROMAN_SYMBOLS.containsKey(roman)) {
             return ROMAN_SYMBOLS.get(roman);
         }
+
         return roman;
     }
 
-    public String toRoman(String arabic) {
-        return ARABIC_SYMBOLS.get(arabic);
+    public String toRoman(int arabic) {
+        String roman = "";
+        int currentNum = arabic;
+
+        for (int i = 0; i < numbers.length; i++) {
+            while (currentNum >= numbers[i]) {
+                roman += letters[i];
+                currentNum -= numbers[i];
+            }
+        }
+
+        return roman;
     }
 
     public boolean isRoman(String number) {
@@ -83,6 +73,10 @@ public class Main {
             final int num2 = Integer.parseInt(converter.toArabic(operators[2]));
             int result;
 
+            if (num1 < 1 || num2 < 1 || num1 > 10 || num2 > 0) {
+                throw new Exception("invalid range nums");
+            }
+
             switch (operators[1]) {
                 case "+":
                     result = num1 + num2;
@@ -105,7 +99,7 @@ public class Main {
                     throw new Exception("invalid result statement");
                 }
 
-                return converter.toRoman(String.valueOf(result));
+                return converter.toRoman(result);
             }
 
             return String.valueOf(result);
