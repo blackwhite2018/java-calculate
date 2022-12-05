@@ -72,8 +72,13 @@ public class Main {
             final int num1 = Integer.parseInt(converter.toArabic(operators[0]));
             final int num2 = Integer.parseInt(converter.toArabic(operators[2]));
             int result;
+            int minRange = 0;
 
-            if (num1 < 1 || num2 < 1 || num1 > 10 || num2 > 0) {
+            if (converter.isRoman(operators[0])) {
+                minRange = 1;
+            }
+
+            if (num1 < minRange || num2 < minRange || num1 > 10 || num2 > 10) {
                 throw new Exception("invalid range nums");
             }
 
